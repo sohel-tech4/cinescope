@@ -13,6 +13,13 @@ export const baseApi = createApi({
       }),
       providesTags: ["movies"],
     }),
+    getSingleMovie: builder.query({
+      query: (slug : string) => ({
+        method: "GET",
+        url: `/movies/${slug}`,
+      }),
+      providesTags: ["movies"],
+    }),
     addRating: builder.mutation({
       query: ({ data, slug }) => {
         console.log(data);
@@ -27,4 +34,4 @@ export const baseApi = createApi({
   }),
 });
 
-export const { useGetMoviesQuery, useAddRatingMutation } = baseApi;
+export const { useGetMoviesQuery, useAddRatingMutation, useGetSingleMovieQuery } = baseApi;
