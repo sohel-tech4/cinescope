@@ -22,7 +22,6 @@ export const baseApi = createApi({
     }),
     addRating: builder.mutation({
       query: ({ data, slug }) => {
-        console.log(data);
         return {
           method: "POST",
           url: `/movies/${slug}/review`,
@@ -31,7 +30,17 @@ export const baseApi = createApi({
       },
       invalidatesTags: ["movies"],
     }),
+    getMoviesReview: builder.query({
+      query: (slug) => {
+        return {
+          method: "GET",
+          url: `/movies/${slug}/reviews`,
+          // movies/the-matrix-31-03-1999/reviews
+        };
+      },
+      providesTags: ["movies"],
+    }),
   }),
 });
 
-export const { useGetMoviesQuery, useAddRatingMutation, useGetSingleMovieQuery } = baseApi;
+export const { useGetMoviesQuery, useAddRatingMutation, useGetSingleMovieQuery, useGetMoviesReviewQuery } = baseApi;
