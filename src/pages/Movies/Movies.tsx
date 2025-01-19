@@ -7,9 +7,10 @@ export default function Movies() {
   console.log(data);
   if (isLoading) {
     return (
-      <p className="text-yellow-500 flex justify-center items-center text-4xl">
+      <p className="text-yellow-500 md:my-40 flex justify-center items-center text-4xl">
         Loading....
       </p>
+
     );
   }
   const movies = data?.data || [];
@@ -18,7 +19,7 @@ export default function Movies() {
       <h1 className="flex items-center justify-center text-2xl font-bold my-10">
         All Movies
       </h1>
-      <div className="grid grid-cols-4 gap-4 mb-5">
+      <div className="grid md:grid-cols-4 md:gap-4 gap-2">
         {movies.map((movie: TMovie) => (
           <MovieCard movie={movie} key={movie?._id} />
         ))}
