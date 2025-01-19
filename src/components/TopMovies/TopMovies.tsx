@@ -20,7 +20,7 @@ const TopMovies = () => {
         Top Rated Movies
       </h2>
       <div className="grid grid-cols-4 gap-4">
-        {movies.map((movie: TMovie) => (
+        {movies.slice(0, 4).map((movie: TMovie) => (
           <MovieCard movie={movie} key={movie?._id} />
         ))}
       </div>

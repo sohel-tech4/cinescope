@@ -12,17 +12,28 @@ import { Plus, Star } from "lucide-react";
 import Rating from "react-rating";
 import { FieldValues, useForm } from "react-hook-form";
 import { useState } from "react";
+import { useAddRatingMutation } from "@/redux/api/api";
+import { TMovie } from "@/types";
+import { toast } from "sonner";
 
-type TMovieProps = {
-  name: string;
-};
-
-export function RatingModal({ name }: TMovieProps) {
+export function RatingModal({ movie }: { movie: TMovie }) {
   const { register, handleSubmit } = useForm();
   const [ratingValue, setRatingValue] = useState(0);
+  const [addRating] = useAddRatingMutation();
+  console.log(addRating);
 
-  const onSubmit = (data: FieldValues) => {
-    console.log({ ...data, rating: ratingValue });
+  const onSubmit = async (values: FieldValues) => {
+    const data = { ...values, rating: ratingValue, movie: movie?._id };
+    const slug = movie?.slug;
+    try {
+      const res = await addRating({ data, slug }).unwrap();
+      if (res?.success) {
+        toast.success(res?.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    console.log(data);
   };
 
   return (
@@ -50,7 +61,6 @@ export function RatingModal({ name }: TMovieProps) {
               initialRating={ratingValue}
               stop={10}
               onClick={(value) => setRatingValue(value)}
-            
             />
           </div>
           <div className="grid gap-4 py-4 text-gray-900">
